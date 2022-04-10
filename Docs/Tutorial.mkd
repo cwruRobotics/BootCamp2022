@@ -1,8 +1,6 @@
-<p align="center" font size="40px">
-    <strong>
-    CWRUBotixs Bootcamp
-    </strong>
-</p>
+
+# CWRUBotixs Bootcamp
+
 
 <!--
 Something similar to this maybe
@@ -10,10 +8,13 @@ Something similar to this maybe
 By the end of this “bootcamp” you will have a knowledge of Linux, ROS, our robot’s code, and be able to drive our robot around in our simulator! If you on the CWRUbotix team feel free to ask questions in the [nasa-rmc-software](https://app.slack.com/client/T168FACCC/C2JAJ8L66) Slack Channel. If you have stumbled across this tutorial and have questions feel free to email me at <rmc170@case.edu>.<br>
 -->
 
-<!-- TODO Maybe have a TOC
-# Table of Contents
-- 
--->
+- [CWRUBotixs Bootcamp](#cwrubotixs-bootcamp)
+- [Install Arduino](#install-arduino)
+  - [Windows 8+](#windows-8)
+  - [Linux/Mac/Windows 7](#linuxmacwindows-7)
+- [Git](#git)
+  - [SSH Key Generation](#ssh-key-generation)
+  - [Install Code](#install-code)
 # Install Arduino
 
 ## Windows 8+
