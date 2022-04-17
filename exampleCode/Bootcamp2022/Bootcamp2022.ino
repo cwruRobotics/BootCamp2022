@@ -32,7 +32,7 @@ void loop() {
     //move
   base_servo.write(base_speed);
   delay(10);
-  base_servo.write(base_stop)
+  base_servo.write(base_stop);
 
   float red, green, blue;
 
