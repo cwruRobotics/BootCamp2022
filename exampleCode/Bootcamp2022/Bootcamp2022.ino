@@ -3,43 +3,42 @@
 #include <Servo.h>
 
 //global variables
-Servo base_servo;
+Servo base_servo; // Takes 0 to 359 degrees
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 int base_pin = 9;
 int base_stop =90; // stop
-int base_speed= 45; // speed can be from 0 to 89 with 0 being fasts, add 90 to reverse directions
+int base_speed= 0; // speed can be from 0 to 89 with 0 being fastest, add 90 to reverse directions
 int deg_per_iteration= 10;
 float color_threshold=100;
-
+int COUNT=15;
+int counter=0;
 
 void setup() {
   Serial.begin(9600);
   base_servo.attach(base_pin);
 
-  if (tcs.begin()) {
-    Serial.println("Found sensor");
-  } else {
-   
-    while (1){
+
+    while (!tcs.begin()){
        Serial.println("No TCS34725 found ... check your connections");
        delay(1000);
     }
-  }
 
   
 }
 void loop() {
+
+  
     //move
-  base_servo.write(base_speed);
-  delay(10);
-  base_servo.write(base_stop);
+  base_servo.write(counter);
+  counter = counter + COUNT;
+  //base_servo.write(base_stop);
 
   float red, green, blue;
 
 
   tcs.setInterrupt(false);  // turn on LED
 
-  delay(60);  // takes 50ms to read
+  //delay(60);  // takes 50ms to read
 
   tcs.getRGB(&red, &green, &blue);
   
