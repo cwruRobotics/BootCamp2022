@@ -1,2 +1,0 @@
-Coding doc for Color sensor
-https://learn.adafruit.com/adafruit-color-sensors/arduino-code
