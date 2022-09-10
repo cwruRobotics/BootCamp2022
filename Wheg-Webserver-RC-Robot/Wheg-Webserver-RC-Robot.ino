@@ -5,7 +5,7 @@
  */
 
 // Libraries that we need
-#include <ArduinoHttpServer.h>
+#include <ESPTelnet.h>
 #include <WiFi.h>
 
 // Other files that we wrote that we need
@@ -22,7 +22,7 @@ const char* password = "YOUR_PASSWORD";
 #define MOTOR1_R 12
 
 // Create a config object for our web server
-WiFiServer serverFi(80);
+ESPTelnet serverFi;
 
 // Create an instance of the Motor class for each motor
 Motor motor0 = Motor(MOTOR0_L, MOTOR0_R);
@@ -42,23 +42,46 @@ void setup() {
   Serial.print("MY IP: ");
   Serial.println(WiFi.softAPIP());
 
-  // Start the web server
+  // Start the telnet server
+  serverFi.onConnect(telnetConnect);
+  serverFi.onConnectionAttempt(telnetAttemptConnection);
+  serverFi.onDisconnect(telnetDisconnect);
+  serverFi.onReconnect(telnetReconnect);
+  serverFi.onInputReceived(telnetEvent);
+
+  // Should do some error checking here...
   serverFi.begin();
 }
 
-void loop() {
-  digitalWrite(5, HIGH);
-  delay(1000);
-  digitalWrite(5, LOW);
-  delay(1000);
-
-  // TODO: Write GET/POST request handler
+void telnetConnect(String ip) {
+  serverFi.println("\nWelcome to the telnet control!");
+  serverFi.println("Escape character: ^] (q to disconnect)");
 }
-//
-//void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
-//{
-//  if(type == WStype_TEXT)
-//  {
+
+void telnetDisconnect(String ip) {
+  // empty
+}
+
+void telnetAttemptConnection(String ip) {
+  // empty
+}
+
+void telnetReconnect(String ip) {
+  // empty
+}
+
+void loop() {
+  serverFi.loop();
+}
+
+void telnetEvent(String txt)
+{
+ if(txt != "")
+ {
+   if (txt == "q")
+   {
+     serverFi.disconnectClient();
+   }
 //    // handle the websocket messages with direction and speed
 //    // by parsing the parameters from a JSON string
 //    String payload_str = String((char*) payload);
@@ -68,8 +91,8 @@ void loop() {
 //    DeserializationError error = deserializeJson(doc, payload_str);
 //    // parse the parameters we expect to receive (TO-DO: error handling)
 //    String dir = doc["direction"];
-////    Serial.print("direction: ");
-////    Serial.println(dir);
+// //    Serial.print("direction: ");
+// //    Serial.println(dir);
 //    if(dir == "STP") {
 //      motor0.stopMotor();
 //      motor1.stopMotor();
@@ -96,6 +119,5 @@ void loop() {
 //        Serial.println("LEFT");
 //      }
 //    }
-//  }
-//}
-//
+ }
+}
