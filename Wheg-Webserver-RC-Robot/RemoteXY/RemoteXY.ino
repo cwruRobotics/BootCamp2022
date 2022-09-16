@@ -1,5 +1,5 @@
 /*
-   -- LED_DEMO --
+   -- New project --
    
    This source code of graphical user interface 
    has been generated automatically by RemoteXY editor.
@@ -26,22 +26,26 @@
 #include <RemoteXY.h>
 
 // RemoteXY connection settings 
-#define REMOTEXY_WIFI_SSID "RemoteXYMichael"
-#define REMOTEXY_WIFI_PASSWORD "hello"
+#define REMOTEXY_WIFI_SSID "RemoteXY"
+#define REMOTEXY_WIFI_PASSWORD "12345678"
 #define REMOTEXY_SERVER_PORT 6377
 
 
 // RemoteXY configurate  
 #pragma pack(push, 1)
-uint8_t RemoteXY_CONF[] =   // 19 bytes
-  { 255,2,0,0,0,12,0,16,31,1,5,0,10,25,43,43,2,26,31 };
+uint8_t RemoteXY_CONF[] =   // 46 bytes
+  { 255,4,0,0,0,39,0,16,31,1,1,0,21,17,12,12,2,31,0,1,
+  0,12,43,12,12,2,31,0,1,0,36,45,12,12,2,31,0,1,0,21,
+  61,12,12,2,31,0 };
   
 // this structure defines all the variables and events of your control interface 
 struct {
 
     // input variables
-  int8_t joystick_1_x; // from -100 to 100  
-  int8_t joystick_1_y; // from -100 to 100  
+  uint8_t button_1; // =1 if button pressed, else =0 
+  uint8_t button_2; // =1 if button pressed, else =0 
+  uint8_t button_3; // =1 if button pressed, else =0 
+  uint8_t button_4; // =1 if button pressed, else =0 
 
     // other variable
   uint8_t connect_flag;  // =1 if wire connected, else =0 
@@ -53,57 +57,66 @@ struct {
 //           END RemoteXY include          //
 /////////////////////////////////////////////
 
-int ain1=4;
-int ain2=3;
-int apwm=2;
 
-int bin1=9;
-int bin2=8;
-int bpwm=7;
+
+
+int ain1=12;
+int ain2=14;
+int apwm=27;
+
+int bin1=25;
+int bin2=33;
+int bpwm=32;
 
 
 void setup() 
 {
+  // DO NOT REMOVE DELAYS AT ALL COST OR IT WON'T MOVE!!!!!!!!!!!!!!!
+  delay(100);
   RemoteXY_Init (); 
+  delay(100);
   pinMode(ain1, OUTPUT);
   pinMode(ain2, OUTPUT);
   pinMode(apwm, OUTPUT);
   pinMode(bin1, OUTPUT);
   pinMode(bin2, OUTPUT);
   pinMode(bpwm, OUTPUT);
+  
   // TODO you setup code
   
+
 }
 
 void loop() 
 { 
-
- //analogWrite(apwm, 100);
-  //analogWrite(bpwm, 100);
   
-  RemoteXY_Handler ();/*
-  if(RemoteXY.joystick_1_x > 75) {
+  analogWrite(apwm, 127);
+  analogWrite(bpwm, 127);
+  
+  RemoteXY_Handler ();
+  
+  if(RemoteXY.button_1 == 1) {
     //up
     digitalWrite(ain1, HIGH);
     digitalWrite(ain2, LOW);
     digitalWrite(bin1, LOW);
     digitalWrite(bin2, HIGH);
   }
-  else if (RemoteXY.joystick_1_x < -75) {
+  else if(RemoteXY.button_2 == 1) {
     //down
     digitalWrite(ain1, LOW);
     digitalWrite(ain2, HIGH);
     digitalWrite(bin1, HIGH);
     digitalWrite(bin2, LOW);
   }
-  else if (RemoteXY.joystick_1_y > 75) {
+  else if(RemoteXY.button_3 == 1) {
     //left
     digitalWrite(ain1, LOW);
     digitalWrite(ain2, HIGH);
     digitalWrite(bin1, LOW);
     digitalWrite(bin2, HIGH);
   }
-  else if (RemoteXY.joystick_1_y < -75) {
+  else if(RemoteXY.button_4 == 1) {
     //right
     digitalWrite(ain1, HIGH);
     digitalWrite(ain2, LOW);
@@ -117,12 +130,11 @@ void loop()
     digitalWrite(bin1, LOW);
     digitalWrite(bin2, LOW);
   }
-  */
+  
   
   
   // TODO you loop code
   // use the RemoteXY structure for data transfer
   // do not call delay() 
-
 
 }
