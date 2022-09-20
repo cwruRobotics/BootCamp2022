@@ -83,15 +83,14 @@ void setup()
   pinMode(bpwm, OUTPUT);
   
   // TODO you setup code
+  analogWrite(apwm, 255);
+  analogWrite(bpwm, 255);
   
 
 }
 
 void loop() 
 { 
-  
-  analogWrite(apwm, 127);
-  analogWrite(bpwm, 127);
   
   RemoteXY_Handler ();
   
